@@ -1,0 +1,835 @@
+<div class="product-layout">
+    
+    <div class="product-bg" style="background: url(<%= image_path @p[0] %>) no-repeat;"><div class="title"><h1><%= @p[2] %></h1><h2><%= @p[1] %></h2></div><ul class="stats">
+        <li class="stat stat-infos" style="opacity: 1;">
+          <div class="top">
+            <div class="speedometer" style="transform: scale(0.8) translate3d(100px, 0, 0)">
+              <div class="speedometer-circle">
+                <div class="speedometer-circle-inner" style="transform: matrix(0.99984, -0.01745, 0.01745, 0.99984, 0, 0);"></div>
+              </div>
+              <div class="speedometer-needle"></div>
+            </div>
+            <div class="numbers"><%= @p[4] %><span class="metrics"> с
+</span></div>
+          </div>
+          <div class="info">Разгон до 100 км/ч</div>
+        </li>
+        <li class="stat stat-stars" style="opacity: 1;">
+          <div class="top">
+            <ul class="stars">
+              <div class="range-numbers range-number-one"><sub>+</sub><%= @p[5] %> <sub> км/ч</sub></div>
+            </ul>
+          </div>
+          <div class="info">Максимальная скорость</div>
+        </li>
+
+        <li class="stat stat-miles" style="opacity: 1;">
+          <div class="top">
+            <div class="range-numbers range-number-two"><%= @p[10] %> <sub> л</sub></div>
+          </div>
+          <div class="info">Объем двигателя</div>
+        </li>
+
+        <li class="stat stat-cta" style="opacity: 1;">
+          <div class="cta">
+            <span id="press" title="Купите машину сегодня!" class="order g-order-button">Заказать</span>
+          </div>
+        </li>
+      </ul><div class="arrow-down" style="opacity: 1;"></div></div>
+    
+    
+  </div>
+
+<div class="product-charasteristics">
+  <div id="specs">
+    <ul>
+      <li>
+        <div class="title bold">Характеристики</div>
+        <div class="value"></div>
+      </li>
+      <li>
+        <div class="title">Количество дверей</div>
+        <div class="value"><%= @p['num_of_doors'] %></div>
+      </li>
+      <li>
+        <div class="title">Количество мест</div>
+        <div class="value"><%= @p['num_of_place'] %></div>
+      </li>
+      <li>
+        <div class="title">Объем двигателя <em class="measurement-unit">л</em></div>
+        <div class="value"><%= @p['val_engine'] %>&nbsp;л</div>
+      </li>
+      <li>
+        <div class="title">Мощность двигателя</div>
+        <div class="value"><%= @p['power'].round %> л/с</div>
+      </li>
+      <li>
+        <div class="title">Количество цилиндров</div>
+        <div class="value"><%= @p['cyls'] %></div>
+      </li>
+      <li>
+        <div class="title">Тип двигателя</div>
+        <div class="value"><%= @p['kind'] %></div>
+      </li>
+      <li>
+        <div class="title">Максимальная скорость</div>
+        <div class="value"><%= @p['mspeed'] %> км/ч</div>
+      </li>
+      <li>
+        <div class="title">Время разгона до 100 км/ч</div>
+        <div class="value"><%= @p['racing'] %> с</div>
+      </li>
+      <li>
+        <div class="title">Запас хода</div>
+        <div class="value"><%= @p['way_res'] %> км</div>
+      </li>
+      <li>
+        <div class="title">Название  двигателя</div>
+        <div class="value"><%= @p[14] %></div>
+      </li>
+      <li>
+        <div class="title">Тип привод</div>
+        <div class="value"><%= @p[15] %></div>
+      </li>
+      <li>
+        <div class="title">Тип коробки передач</div>
+        <div class="value"><%= @p[16] %></div>
+      </li>
+      <li>
+        <div class="title">Количество передач</div>
+        <div class="value"><%= @p[17] %></div>
+      </li>
+      <li>
+        <div class="title">Тип кузов</div>
+        <div class="value"><%= @p[18] %></div>
+      </li>
+      <li>
+        <div class="title">Габариты автомобиля</div>
+        <div class="value"><%= @p['length'] %> x <%= @p['width'] %></div>
+      </li>
+      <li>
+        <div class="title">Расположение двигателя</div>
+        <div class="value"><%= @p['loc_of_engine'] %></div>
+      </li>
+      <li>
+        <div class="title">Бренд</div>
+        <div class="value"><a href="/course_work/brand_view?id=<%= @p['id'] %>" class="manufacturer" style="color: white; font-weight: bold;padding: 4px"><%= @p[2] %></a></div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  <div id="myModal" class="modalwin">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h5 align="center">Оформление заказа:</h5>
+      <br>
+      <table style="width: 90%;" class="table" align="center">
+        <tbody>
+        <tr>
+          <td><strong>Имя клиента:</strong>
+            <select class="form-control">
+              <% Customer.all.each do |el| %>
+                <option c_id="<%= el.id %>" value="<%= el.full_name %>"><%= el.full_name %></option>
+              <% end %>
+            </select>
+          </td>
+          <td><strong>Вид оплаты:</strong>&nbsp;
+            <select class="form-control">
+              <option value="наличные">наличные</option>
+              <option value="перечисление">перечисление</option>
+              <option value="пластиковая карта">пластиковая карта</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>Доставка:</strong>
+            <select class="form-control">
+              <option value="Да">Да</option>
+              <option value="Нет">Нет</option>
+            </select>
+          </td>
+          <td><strong>Количество:</strong>&nbsp;<input type="text" class="form-control"></td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Дополнительные опции:</strong><br><br>
+            <label><input class="check" type="checkbox" value="abs" onclick="addprice(this)" data-v="20000"> ABS</label><br>
+            <label><input class="check" type="checkbox" value="heating" onclick="addprice(this)" data-v="30000"> Подогрев</label><br>
+            <label><input class="check" type="checkbox" value="multim" onclick="addprice(this)" data-v="50000"> Мультимедиа</label><br>
+            <label><input class="check" type="checkbox" value="p_sens" onclick="addprice(this)" data-v="40000"> Парктроник</label><br>
+            <label><input class="check" type="checkbox" value="nav" onclick="addprice(this)" data-v="10000"> Навигатор</label>
+          </td>
+          <td>
+            <strong>Цвет автомобиля:</strong><br><br>
+            <label><input class="radio" type="radio" name="rbtn" value="зелёный"> зелёный</label><br>
+            <label><input class="radio" type="radio" name="rbtn" value="жёлтый"> жёлтый</label><br>
+            <label><input class="radio" type="radio" name="rbtn" value="серый"> серый</label><br>
+            <label><input class="radio" type="radio" name="rbtn" value="чёрный" checked> чёрный</label><br>
+            <label><input class="radio" type="radio" name="rbtn" value="белый"> белый</label>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+<div class="summ">Стоимость данной комплектации: <i data-price="<%= (@p['price'] / 10).round * 10 %>" class="num"><%= number_to_currency((@p['price']).to_i, delimiter: " ", precision: 0, format: "%n  ₽") %></i></div>
+      <button id="add" class="btn btn-primary">Создать</button>
+    </div>
+
+  </div>
+
+<script>
+  var modal = document.getElementById('myModal');
+  var btn = document.getElementById("press");
+  var span = document.getElementsByClassName("close")[0];
+  var add = document.getElementById('add');
+  var select = document.getElementsByClassName('form-control');
+  var inputs = document.getElementsByClassName('check');
+  var extra_price = 0;
+
+  function addprice(elem){
+    switch (elem.parentElement.textContent) {
+      case ' ABS':
+        elem.setAttribute('checked', 'checked');
+        elem.parentElement.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+20 000 ₽';
+        extra_price += $(elem).data('v');
+        break;
+      case ' Подогрев':
+        elem.setAttribute('checked', 'checked');
+        elem.parentElement.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+30 000 ₽';
+        extra_price += $(elem).data('v');
+        break;
+      case ' Мультимедиа':
+        elem.setAttribute('checked', 'checked');
+        elem.parentElement.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+50 000 ₽';
+        extra_price += $(elem).data('v');
+        break;
+      case ' Парктроник':
+        elem.setAttribute('checked', 'checked');
+        elem.parentElement.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+40 000 ₽';
+        extra_price += $(elem).data('v');
+        break;
+      case ' Навигатор':
+        elem.setAttribute('checked', 'checked');
+        elem.parentElement.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+10 000 ₽';
+        extra_price += $(elem).data('v');
+        break;
+      default:
+	str = $(elem).data('v');
+        elem.removeAttribute('checked');
+        extra_price -= Number(str);
+        elem.parentElement.innerHTML = elem.parentElement.innerHTML.substr(0, elem.parentElement.innerHTML.indexOf('&nbsp;'));
+        break;
+    }
+	var price = $('.summ i').data('price')+extra_price+' ';
+	$('.summ i').html(price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')+' ₽');
+  };
+
+    // When the user clicks on the button, open the modal
+  btn.onclick = function () {
+    modal.style.display = "block";
+    $('body').css('overflow', 'hidden');
+    $('html,body').scrollTop(0);
+      $('.product-charasteristics').addClass('fixed');
+      $('.modal-content').addClass('active');
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+    $('body').css('overflow', 'visible');
+    $('.product-charasteristics').removeClass('fixed');
+    $('.modal-content').removeClass('active');
+  };
+
+    // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+	$('.product-charasteristics').removeClass('fixed');
+        $('.modal-content').removeClass('active');
+    }
+  };
+
+  add.onclick = function () {
+    let radio = $("input:radio:checked").val();
+    if (select[3].value != ''){
+      $.ajax({
+            type: "POST",
+            url: '/handling/add_order',
+            data: {p_id: <%= @p[22] %>,t_pay: select[1].value, delivery: select[2].value, amount: select[3].value,
+            c_id: select[0].options[select[0].selectedIndex].getAttribute("c_id"), abs: inputs[0].checked,
+            heating: inputs[1].checked, multim: inputs[2].checked,p_sens: inputs[3].checked, nav: inputs[4].checked,
+            colour: radio},
+            headers: {
+                'X-Transaction': 'POST Example',
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function () {
+                alert("Заказ успешно создан!");
+                location.reload();
+            }
+
+        });
+    }
+    else 
+      alert('Не все поля заполнены!');
+  }
+
+  setTimeout(function() {
+    $('.title').addClass('active');
+  }, 500);
+  setTimeout(function() {
+    $('.speedometer-needle').css('transform','matrix(0, 1, -1, 0, 0, 0)');
+    $('.speedometer').css('transform','scale(0.8)');
+  }, 500);
+  setTimeout(function() {
+    $('ul.stats').addClass('active');
+  }, 1100);
+
+  if(window.location.href.indexOf('&getorder') >= 0) {
+      modal.style.display = "block";
+      $('body').css('overflow', 'hidden');
+      $('.product-charasteristics').addClass('fixed');
+      $('.modal-content').addClass('active');
+  }
+</script>
+
+<style>
+    .speedometer-needle {
+        transition: 0.3s ease;
+        transform: matrix(0, -1, 1, 0, 0, 0);
+    }
+    .product-bg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-size: cover !important;
+        background-position: center;
+        top: 0;
+        z-index: 0;
+    }
+
+    .bg-dark {
+        position: relative;
+        z-index: 1;
+        background: #ffffff00 !important;
+    }
+
+    ul.stats {
+        position: absolute;
+        bottom: 0;
+        color: white;
+        list-style: none;
+        padding: 0;
+    }
+
+    .stats {
+        position: absolute;
+        left: 50%;
+        margin-top: 10px;
+        height: 45px;
+        width: 792px;
+        margin-left: -395px;
+        top: 85%;
+    }
+
+    .stats .stat {
+        opacity: 0;
+    }
+
+    .stats .stat.stat-miles {
+        border-right: 0;
+    }
+
+    .stats .stat.stat-miles .info {
+        text-transform: capitalize;
+    }
+
+    .stats .stat.stat-cta {
+        border-right: 0;
+    }
+    .speedometer {
+        transition: 0.4s ease;
+    }
+    .stats li {
+        position: relative;
+        width: 198px;
+        height: 52px;
+        float: left;
+        border-right: 1px solid rgba(255,255,255,0.4);
+        color: #fff;
+    }
+
+    .stats li div {
+        pointer-events: none;
+    }
+
+    .stats li .cta {
+        margin-top: 6px;
+    }
+
+    .stats li .top {
+        position: relative;
+        width: 100%;
+        height: 30px;
+        text-align: center;
+        transform: scale(0.9);
+        transform-origin: 50% 0;
+        line-height: 19px;
+    }
+
+    .stats li .top sub {
+        position: relative;
+        display: inline-block;
+        vertical-align: 0;
+        font-size: .6em;
+        margin-left: 1px;
+        top: 0;
+    }
+
+    .stats li .top .range-numbers {
+        position: relative;
+        width: 100%;
+        text-align: center;
+        font-size: 35px;
+        font-weight: normal;
+        top: -5px;
+        letter-spacing: -1px;
+        line-height: 1;
+    }
+
+    .stats li .top .stars {
+        position: relative;
+        -ms-flex-pack: center;
+        justify-content: center;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .stats li .top .stars .star {
+        position: relative;
+        font-size: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 19px;
+        height: 19px;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        opacity: .2;
+        float: 0;
+        border-right: 0;
+        margin-top: 0;
+    }
+
+    .stats li .top .seat {
+        position: relative;
+        display: inline-block;
+        width: 29px;
+        height: 28px;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+    }
+
+    .stats li .top .speedometer {
+        position: relative;
+        height: 30px;
+        width: 48px;
+        display: inline-block;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        transform: scale(0.8);
+        transform-origin: 50% 100%;
+        -webkit-font-feature-settings: 'tnum';
+        font-feature-settings: 'tnum';
+        font-variant-numeric: tabular-nums;
+        background-image: url("<%= image_path 'other/speedometer.svg' %>");
+    }
+
+    .stats li .top .speedometer .speedometer-circle {
+        position: absolute;
+        width: 33px;
+        height: 17px;
+        bottom: 4px;
+        left: 7px;
+        overflow: hidden;
+    }
+
+    .stats li .top .speedometer .speedometer-circle .speedometer-circle-inner {
+        position: absolute;
+        width: 33px;
+        height: 17px;
+        bottom: 0;
+        left: 0;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        transform-origin: 50% 100%;
+        background-image: url("<%= image_path 'other/speedometercircle.svg' %>");
+    }
+
+    .stats li .top .speedometer .speedometer-needle {
+        position: absolute;
+        width: 5px;
+        height: 19px;
+        bottom: 3px;
+        left: 21.5px;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        transform-origin: 50% 15px;
+        background-image: url("<%= image_path 'other/speedometerneedle.svg' %>");
+    }
+
+    .stats li .top .numbers {
+        position: relative;
+        width: auto;
+        height: 30px;
+        display: inline-block;
+        font-size: 40px;
+    }
+
+    .stats li .top .numbers div {
+        height: 30px;
+        float: left;
+        font-size: 30px;
+        top: 0;
+        font-weight: normal;
+    }
+
+    .stats li .top .numbers .number {
+        position: relative;
+        width: 22px;
+        overflow: hidden;
+    }
+
+    .stats li .top .numbers .number .number-inner {
+        position: relative;
+        width: 22px;
+        height: 646px;
+        background-size: 100% auto;
+        background-repeat: repeat-y;
+        background-image: url("<%= image_path 'other/numerals.svg' %>");
+    }
+
+    .stats li .topinfo {
+        position: absolute;
+        left: 0;
+        top: -24px;
+        text-align: center;
+        font-size: 13px;
+        font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+        width: 100%;
+    }
+
+    .stats li .info {
+        text-align: center;
+        clear: both;
+        position: relative;
+        font-size: 13px;
+        font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+        width: 100%;
+        margin-top: 7px;
+    }
+
+    @media screen and (max-width: 850px) {
+        .stats {
+            width:680px;
+            margin-left: -340px;
+        }
+
+        .stats li {
+            width: 169px;
+        }
+
+        .g-order-button {
+            width: 169px;
+        }
+    }
+
+    span.metrics {
+        font-size: 18px;
+    }
+
+    .g-order-button {
+        position: relative;
+        display: block;
+        width: 178px;
+        height: 42px;
+        box-sizing: border-box;
+        border: 2.5px solid #fff;
+        border-radius: 21px;
+        font-size: 12px;
+        line-height: 13px;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        padding-top: 12px;
+        font-weight: normal;
+        transition: background-color .5s,opacity .5s;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+    .g-order-button:hover {
+        background-color: #fff;
+        color: #333;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    @keyframes bounce {
+        0%,100%,20%,50%,80% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(5px);
+        }
+
+        60% {
+            transform: translateY(3px);
+        }
+    }
+
+    .arrow-down {
+        position: absolute;
+        bottom: 25px;
+        left: 50%;
+        width: 20px;
+        height: 12px;
+        margin-left: -10px;
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-image: url(<%= image_path 'other/arrow-down.svg' %>);
+        animation-name: bounce;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        cursor: pointer;
+    }
+
+    button.navbar-toggler {
+        color: white !important;
+        border: none !important;
+        outline: none;
+    }
+    .title {
+        position: absolute;
+        left: 0;
+        top: 10%;
+        width: 100%;
+        padding-top: 0;
+        margin-bottom: 0;
+    }
+
+    .title.active h1, .title.active h2 {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+
+    .title h1 {
+        position: relative;
+        font-size: 23px;
+        font-weight: 100;
+        margin: 4px 0 0;
+        line-height: 1;
+        display: block;
+        text-align: center;
+        color: #fff;
+        user-select: none;
+        opacity: 0;
+        transform: translate3d(0,30px,0);
+        transition: transform 500ms cubic-bezier(0.165,0.84,0.44,1),opacity 500ms cubic-bezier(0.165,0.84,0.44,1);
+        transition-delay: 330ms;
+        text-shadow: 0 0 10px #00000085;
+    }
+
+    .title h2 {
+        position: relative;
+        font-size: 50px;
+        margin-top: 5px;
+        font-weight: normal;
+        line-height: 1;
+        display: block;
+        text-align: center;
+        color: #fff;
+        user-select: none;
+        opacity: 0;
+        transform: translate3d(0,30px,0);
+        transition: transform 500ms cubic-bezier(0.165,0.84,0.44,1),opacity 500ms cubic-bezier(0.165,0.84,0.44,1);
+        transition-delay: 460ms;
+        text-shadow: 0 0 10px #0000004d;
+    }
+
+    .navbar-dark .navbar-brand, a.nav-item.nav-link {
+        text-shadow: 0 0 2px #0000009e;
+    }
+
+    a.nav-item.nav-link:last-child {
+        color: #ffffff;
+        opacity: 0.9;
+    }
+
+    .numbers {
+        transition: 0.3s ease-out;
+        transition-delay: 0s;
+        transform: translate3d(0, 100px, 0);
+    }
+
+    .top {
+        overflow: hidden;
+    }
+
+    .range-number-one {
+        transition: 0.3s ease-out;
+        transition-delay: 0.5s;
+        transform: translate3d(0, 100px, 0);
+    }
+
+    .range-number-two {
+        transition: 0.3s ease-out;
+        transition-delay: 1s;
+        transform: translate3d(0, 100px, 0);
+    }
+
+    ul.stats.active .numbers, ul.stats.active .range-number-one, ul.stats.active .range-number-two {
+        transform: none !important;
+    }
+
+    .product-charasteristics {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        top: 100%;
+        background: black;
+    }
+    [id='specs'] {
+        position: relative;
+        width: 100%;
+        margin-top: 90px;
+        height: auto;
+        z-index: 20;
+    }
+
+    [id='specs'] ul li:first-child {
+        border-top: none;
+    }
+
+    [id='specs'] ul li {
+        margin: 0;
+        padding: 16px 0;
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.5);
+        color: #fff;
+        font-size: 15px;
+        display: block;
+        position: relative;
+    }
+
+    [id='specs'] ul {
+        margin: 0;
+        padding: 0;
+        position: relative;
+        display: block;
+        top: 0;
+        left: 50%;
+        width: 600px;
+        margin-left: -300px;
+        height: auto;
+    }
+.modal-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 90%;
+    background: white;
+    height: 560px;
+    height: max-content;
+    display: block;
+    transition: 0.3s ease;
+    top: -200vh;
+    margin: auto;
+}
+    [id='specs'] ul li .title {
+        font-weight: normal;
+        text-align: left;
+        max-width: 75%;
+        overflow: hidden;
+    }
+
+    [id='specs'] ul li .value {
+        font-weight: normal;
+        text-align: right;
+        overflow: hidden;
+        max-width: 60%;
+        float: right;
+        position: absolute;
+        top: 10%;
+        right: 0;
+    }
+
+    [id='specs'] ul li .title.bold {
+        font-weight: bold;
+    }
+    .navbar-brand {
+    background: url(<%= image_path 'logos/apollo.png' %>) no-repeat;
+    color: transparent !important;
+    text-shadow: unset !important;
+    background-size: cover !important;
+    transition: 0.3s ease;
+    width: 32px;
+    transform-origin: left;
+    transform: scale(0.7);
+    }
+        .navbar-brand:hover {
+        width: 193px;
+        }
+    .product-charasteristics { transition: 0.3s ease; }
+    .product-charasteristics.fixed { top: 100% !important; }
+.modal-content.active {
+      top: 0;
+    }
+button#add {
+    background: black;
+    border: 1px solid #3a3a3a;
+    width: 100%;
+}
+.summ {
+    font-size: 16px;
+    padding: 16px;
+    font-weight: 600;
+    font-family: 'Open Sans';
+    padding-bottom: 26px;
+}
+
+.summ i {
+    font-style: normal;
+    font-weight: 100;
+    font-size: 20px;
+    border-bottom: 1px solid #a2a2a2;
+    margin-left: 14px;
+}
+.modal-content h5, .modal-content strong {
+    font-weight: 400;
+}
+</style>
+<script>
+    $(window).bind('mousewheel', function(event) {
+        if (event.originalEvent.wheelDelta >= 0) {
+            $('.product-charasteristics').css('top', '100%');
+        }
+        else {
+            $('.product-charasteristics').css('top', '0');
+        }
+    });
+</script>
+<script>
+    $('.arrow-down').click(function() {
+        $('.product-charasteristics').css('top', '0');
+    });
+</script>

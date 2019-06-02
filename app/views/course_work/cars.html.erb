@@ -1,0 +1,372 @@
+<body class="bcolor">
+  <div class="framing">
+    <h2>Список автомобилей:</h2>
+<% if User.find(session[:user_id]).perk.addn %>
+      <button id="myBtn" class="btn btn-primary">+</button>
+    <% end %>
+<br>
+    <ul>
+      <% @cars.each do |i| %>
+        <li><a class="no-decoration" href="/course_work/watch?param=<%= i.id %>"><i class="brand"><%= i.brand.name %></i> <i class="model"><%= i.model %></i></a>
+
+<% if(i.exist == 'Да') %>
+<div class="exist yes">В наличии</div>
+<% else %>
+<div class="exist no">Нет в наличии</div>
+<% end %>
+
+          <% if User.find(session[:user_id]).perk.edit %>
+            <span class="right btn-anim edit" p_id="<%= i.id %>" brand="<%= i.brand.name %>" model="<%= i.model %>" body ="<%= i.body.name %>" drive="<%= i.tech.drive.name %>" n_eng = "<%= i.tech.typeng.name %>" t_eng="<%= i.tech.typeng.kind %>" l_eng="<%= i.tech.loc_of_engine %>" v_eng="<%= i.tech.typeng.val_engine %>" power="<%= i.tech.typeng.power %>" mspeed="<%= i.tech.mspeed %>" doors="<%= i.tech.num_of_doors %>" places="<%= i.tech.num_of_place %>" price="<%= i.price %>" country="<%= i.brand.country %>" exist="<%= i.exist %>" >Редактировать</span>&nbsp;&nbsp;
+          <% end %>  
+          <% if User.find(session[:user_id]).perk.del %>
+            <span class="underlined btn-anim delete" id="d<%= i.id %>">Удалить</span>
+          <% end %>  
+        </li>
+      <% end %>
+    </ul>
+    <br>
+    <%= will_paginate @cars, list_classes: %w(pagination justify-content-center) %>
+  </div>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modalwin">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h5 align="center">Добавление нового автомобиля:</h5>
+      <br>
+      <table style="width: 70%;" class="table table-bordered" align="center">
+        <tbody>
+        <tr>
+          <td><strong>Марка авто:</strong>&nbsp;<input type="text" class="form-control"></td>
+          <td><strong>Модель:</strong>&nbsp;<input type="text" class="form-control"></td>
+        </tr>
+
+        <tr>
+          <td><strong>Тип кузова:</strong>&nbsp;
+            <select class="form-control">
+              <option value="купе">купе</option>
+              <option value="седан">седан</option>
+              <option value="лифтбек">лифтбек</option>
+              <option value="хетчбэк">хетчбэк</option>
+              <option value="кроссовер">кроссовер</option>
+              <option value="универсал">универсал</option>
+            </select>
+          </td>
+          <td><strong>Тип привода:</strong>&nbsp;
+            <select class="form-control">
+              <option value="передний">передний</option>
+              <option value="задний">задний</option>
+              <option value="полный">полный</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>Название двигателя:</strong>&nbsp;<input type="text" class="form-control"></td>
+          <td><strong>Тип двигателя:</strong>&nbsp;
+            <select class="form-control">
+              <option value="бензиновый">бензиновый</option>
+              <option value="дизельный">дизельный</option>
+              <option value="газовый">газовый</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>Расп. двигателя:</strong>&nbsp;
+            <select class="form-control">
+              <option value="спереди">спереди</option>
+              <option value="сзади">сзади</option>
+            </select>
+          </td>
+          <td><strong>Объём двигателя:</strong>&nbsp;<input type="text" class="form-control"></td>
+        </tr>
+
+        <tr>
+          <td><strong>Мощность двигателя(л.с.):</strong>&nbsp;<input type="text" class="form-control"></td>
+          <td><strong>Максимальная скорость:</strong>&nbsp;<input type="text" class="form-control"></td>
+        </tr>
+
+        <tr>
+          <td><strong>Кол-во дверей:</strong>&nbsp;<input type="text" class="form-control"></td>
+          <td><strong>Кол-во мест:</strong>&nbsp;<input type="text" class="form-control"></td>
+        </tr>
+
+        <tr>
+          <td><strong>Цена:</strong>&nbsp;<input type="text" class="form-control"></td>
+          <td><strong>Страна изготовитель:</strong>&nbsp;<input type="text" class="form-control"></td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Наличие на складе:</strong>&nbsp;
+            <select class="form-control">
+              <option value="Нет">Нет</option>
+	            <option value="Да">Да</option>
+              <option value="Скоро будет">Скоро будет</option>
+            </select>
+          </td>
+          <td>
+            <strong>Ссылка на изображение:</strong>&nbsp;<input type="text" class="form-control">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button id="add" class="btn btn-dark">Добавить</button>
+    </div>
+  </div>
+
+<script type="text/javascript">
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    var add = document.getElementById('add');
+    var t_input = document.getElementsByClassName('form-control');
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    };
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    add.onclick = function () {
+      let key = true;
+      for (let i = 0; i < 16; i++){
+        if (t_input[i].value == '')
+          key = false;
+      }
+      if (key){    
+        $.ajax({
+            type: "POST",
+            url: '/handling/add_car',
+            data: {brand: t_input[0].value, model: t_input[1].value, body: t_input[2].value, drive: t_input[3].value,
+                n_eng: t_input[4].value, t_eng: t_input[5].value, l_eng: t_input[6].value,
+                v_eng: t_input[7].value, power: t_input[8].value, mspeed: t_input[9].value,
+                doors: t_input[10].value, places: t_input[11].value, price: t_input[12].value, country: t_input[13].value,
+                exist: t_input[14].value, image: t_input[15].value},
+            headers: {
+                'X-Transaction': 'POST Example',
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function () {
+                alert("Машина успешно добавлена!");
+                location.reload();
+            }
+
+        });
+        modal.style.display = "none";
+      }
+      else 
+        alert('Не все поля заполнены!');
+    };
+
+    $(".underlined").click(function () {
+        var current_tr = $(this).parents('li');
+        if (confirm("Вы уверены?")) {
+            $.ajax({
+                type: "POST",
+                url: "/handling/del_car",
+                data: {_method: "DELETE", c_id: $(this).attr('id').substring(1)},
+                headers: {
+                    'X-Transaction': 'POST Example',
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function () {
+                    current_tr.fadeOut(200);
+                }
+            })
+        }
+        ;
+    });
+
+    $(".right").click(function () {
+        let header = document.getElementsByTagName('h5')[0];
+        let curr_id = $(this).attr('p_id');
+        header.innerText = "Изменение данных автомобиля";
+        add.innerText = "Изменить";
+        t_input[0].value = $(this).attr('brand');
+        t_input[1].value = $(this).attr('model');
+        t_input[2].value = $(this).attr('body');
+        t_input[3].value = $(this).attr('drive');
+        t_input[4].value = $(this).attr('n_eng');
+        t_input[5].value = $(this).attr('t_eng');
+        t_input[6].value = $(this).attr('l_eng');
+        t_input[7].value = $(this).attr('v_eng');
+        t_input[8].value = $(this).attr('power');
+        t_input[9].value = $(this).attr('mspeed');
+        t_input[10].value = $(this).attr('doors');
+        t_input[11].value = $(this).attr('places');
+        t_input[12].value = $(this).attr('price');
+        t_input[13].value = $(this).attr('country');
+        t_input[14].value = $(this).attr('exist');
+        modal.style.display = "block";
+        add.onclick = function () {
+          let key = true;
+          for (let i = 0; i < 15; i++){
+            if (t_input[i].value == '')
+              key = false;
+          }
+          if (key){
+            $.ajax({
+                type: "POST",
+                url: "/handling/edit_car",
+                data: {brand: t_input[0].value, model: t_input[1].value, body: t_input[2].value, drive: t_input[3].value,
+                n_eng: t_input[4].value, t_eng: t_input[5].value, l_eng: t_input[6].value,
+                v_eng: t_input[7].value, power: t_input[8].value, mspeed: t_input[9].value,
+                doors: t_input[10].value, places: t_input[11].value, price: t_input[12].value, country: t_input[13].value,
+                exist: t_input[14].value, image: t_input[15].value, c_id: curr_id},
+                headers: {
+                    'X-Transaction': 'POST Example',
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function () {
+                    alert("Данные успешно изменены!");
+                    location.reload();
+                }
+            });
+          }
+          else
+             alert('Не все поля заполнены!');
+        }; 
+    })
+</script>
+<style>
+body, .framing {
+    background: #fafafa !important;
+}
+
+h2 {
+    font-weight: 200;
+    font-size: 1.5em;
+    padding-top: 70px;
+    color: black;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 18px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+i {
+    font-style: normal;
+}
+
+i.brand {
+    color: #858585;
+    font-weight: 300;
+    font-size: 14px;
+}
+ul li {
+    line-height: 27px;
+}
+i.model {
+    color: #000;
+    font-weight: 300;
+}
+.exist {
+    display: inline-block;
+    padding-left: 22px;
+    font-size: 12px;
+    color: gray;
+    position: relative;
+    width: 160px
+}
+
+a.no-decoration {
+    width: 340px;
+    display: inline-block;
+}
+
+.exist::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.exist.yes::after {
+    background: #11b911;
+}
+.exist.no::after {
+    background: red;
+}
+.no-decoration { text-decoration: none !important; }
+span.btn-anim {
+    color: white;
+    background: #232323;
+    padding: 2px 14px;
+    text-decoration: none;
+    font-family: 'Open Sans';
+    font-size: 10px;
+    border-radius: 20px;
+    transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    line-height: 1.3;
+    cursor: pointer;
+}
+span.btn-anim::after {
+    content: 'Редактировать';
+    overflow: hidden;
+    position: absolute;
+    left: -200px;
+    width: 100%;
+    height: 100%;
+    background: white;
+    top: 0;
+    border-radius: 20px;
+    transition: 0.4s ease;
+    color: black;
+    font-family: 'Open Sans';
+    font-size: 10px;
+    text-align: center;
+    padding: 2px;
+}
+span.btn-anim.delete::after {
+	content: 'Удалить';
+}
+span.btn-anim:hover::after {
+    left: 0;
+}
+span.btn-anim:hover {
+    background: white;
+}
+button#myBtn {
+    float: right;
+    background: black;
+    border: 1px solid #404040;
+}
+.page-item.active .page-link {
+    background: black;
+    border: 1px solid #676767;
+}
+
+.page-link {
+    color: black;
+}
+</style>
+</body>

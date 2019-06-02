@@ -1,0 +1,100 @@
+<h1 class="title"><%= @b.name %></h1>
+<% if @b.logo != 'nologo' %>
+  <%= image_tag @b.logo, class: 'logo_brand' %>
+<% end %>
+<% if @o.empty? %>
+  <br><br><h2 align="center">Пока не продано ни одного автомобиля!</h2>
+<% else %>
+  <h2 class="title">Список проданных автомобилей данной марки</h2>
+  <table class="table table-hover table-fixed">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Модель</th>
+        <th>Цена</th>
+        <th>Количество</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% curr = 1 %>
+      <% @models.each do |el| %>
+        <tr>
+          <th scope="row"><%= curr %></th>
+          <td><%= el[0] %></td>
+          <td><%= el[2] %></td>
+          <td><%= el[1] %></td>
+        </tr>
+        <% curr += 1 %>
+      <% end %>
+    </tbody>
+  </table>
+  <p class="all_ammount"><span class="txt-ammount">Общая сумма продаж марки:</span><br><b class="arrows"><%= number_to_currency((@sum).to_i, delimiter: " ", precision: 0, format: "%n  ₽") %></b></p>
+<% end %>
+<style>
+  h1.title {
+    text-align: center;
+  }
+
+  img.logo_brand {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 190px;
+    padding-bottom: 15px;
+  }
+  p.all_ammount {
+    position: fixed;
+    bottom: 0;
+    background: #212a58;
+    margin: 0;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 26px;
+  }
+
+  p.all_ammount b {
+    font-weight: 700;
+    font-size: 40px;
+  }
+
+  b.arrows::after {
+    content: '>';
+    font-weight: 100;
+    color: #5c72e6;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 74px;
+    height: 42px;
+  }
+
+  b.arrows::before {
+    content: '<';
+    font-weight: 100;
+    color: #5c72e6;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 74px;
+    height: 42px;
+    margin-left: -43px;
+  }
+
+  span.txt-ammount {
+    background: #202958;
+    z-index: 1;
+    position: relative;
+  }
+
+  h2.title {
+    font-weight: 300;
+    margin: 22px;
+    text-align: center;
+  }
+</style>

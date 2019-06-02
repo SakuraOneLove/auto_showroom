@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Аполлон-Авто</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="<%= course_work_view_path %>">Apollo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="<%= course_work_cars_path %>?page=1">Все машины<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="<%= course_work_l_customers_path %>">Клиенты</a>
+      <% if logged_in? %>
+        <a class="nav-item nav-link" href="<%= logout_path %>">Logout</a>
+      <% end %>
+    </div>
+  </div>
+</nav>
+<style>
+  nav.navbar.navbar-expand-lg.navbar-dark {
+    background: rgb(1,0,24);
+    background: linear-gradient(90deg, rgba(1, 0, 24, 0.5) 0%, rgba(9,9,121,0) 40%, rgba(0,212,255,0) 100%);
+    z-index: 1;
+  }
+  body {
+    background: #f9f9f9;
+  }
+  .navbar-brand {
+    background: url(<%= image_path 'logos/apollo.png' %>) no-repeat;
+    color: transparent !important;
+    text-shadow: unset !important;
+    background-size: cover !important;
+    transition: 0.3s ease;
+    width: 32px;
+    transform-origin: left;
+    transform: scale(0.7);
+  }
+  .navbar-brand:hover {
+    width: 193px;
+  }
+</style>
+<%= yield %>
+</body>
+</html>

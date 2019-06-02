@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  model: MyString
+  exist: MyString
+  image: MyString
+  fav: 0
+  tech: 1
+  body: 1
+  brand: 1
+  exist: MyString
+  price: 1.5
+
+two:
+  model: MyString
+  exist: MyString
+  image: MyString
+  fav: 0
+  tech: 1
+  body: 1
+  brand: 1
+  exist: MyString
+  price: 1.5

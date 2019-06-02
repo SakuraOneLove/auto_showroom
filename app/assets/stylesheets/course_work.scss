@@ -1,0 +1,269 @@
+// Place all the styles related to the Course_work controller here.
+// They will automatically be included in application.scss.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.right{
+  margin-left: 1%;
+  text-decoration: underline;
+  font-family: "italic";
+  color: blue;
+  cursor: pointer;
+}
+.underlined{
+  text-decoration: underline;
+  font-family: "italic";
+  color: blue;
+  cursor: pointer;
+}
+.bcolor{
+  background-color: silver;
+}
+.framing{
+  width: 85%;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
+  background: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 50px;
+}
+.modalwin {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+//Код Никиты
+ul.cars_list {
+  display: block;
+  width: 100%;
+  margin: 0;
+  list-style: none;
+  padding: 10px 20px;
+}
+
+img.poster_car {
+  width: 100%;
+  max-width: 200px;
+  Display:block;
+  Margin:auto;
+}
+
+ul.cars_list li {
+  width: 19%;
+  display: inline-block;
+}
+
+p.title_car {
+  color: black;
+  font-weight: bold;
+  padding-top: 10px;
+  margin: 0;
+}
+
+p.body_type {
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+  color: #adadad;
+}
+
+p.price {
+  padding-top: 10px;
+  color: black;
+  font-weight: 100;
+  font-size: 20px;
+  margin-bottom: 8px;
+  letter-spacing: 0px;
+}
+
+p.nalog_info {
+  margin: 0;
+  color: black;
+  font-weight: 100;
+  line-height: 16px;
+  font-size: 12px;
+}
+
+ul.cars_list a {
+  text-decoration: none;
+}
+ul.cars_list li:hover {
+   -webkit-box-shadow: 0 0 7px 0 rgba(51,51,51,0.33);
+  box-shadow: 0 0 7px 0 rgba(51,51,51,0.33);
+}
+
+ul.cars_list li {
+  transition: 0.3s ease;
+  border-radius: 3px;
+padding-top: 4px;
+
+}
+ul.slick-dots {
+position: absolute;
+list-style: none;
+bottom: 0;
+left: 0;
+right: 0;
+display: inline-block;
+margin: auto;
+width: 168px;
+width: max-content;
+padding: 0;
+}
+
+ul.slick-dots li {
+display: inline-block;
+padding: 10px;
+}
+ul.slick-dots li button {
+display: none;
+}
+
+ul.slick-dots li::after {
+content: '';
+width: 55px;
+height: 3px;
+background: white;
+opacity: 1;
+position: relative;
+display: block;
+cursor: pointer;
+}
+body {
+padding-bottom: 175px;
+}
+ul.slick-dots li.slick-active::after {
+background: #00adef;
+}
+a.btn_more {
+  border-bottom: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: "DaimlerCS-Regular",Helvetica,Arial,sans-serif;
+  line-height: 1.25;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  overflow: hidden;
+  padding: 0 5.14538%;
+  height: 45px;
+  line-height: 45px;
+  display: block;
+  background-color: #00adef;
+  padding: 0 18px;
+  float: left;
+  font-weight: 100;
+  font-size: 14px;
+  width: 100%;
+}
+img.poster_car {
+height: 125px;
+}
+a.btn_more svg {
+  fill: white;
+  width: 22px;
+  height: 22px;
+}
+
+a.btn_more .txt {
+  padding-left: 10px;
+  position: relative;
+  top: 1px;
+}
+
+a.card_car {
+  padding: 20px 10px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  background: white;
+}
+
+.hide_block {
+  transition: 0.3s ease;
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  opacity: 0;
+  -webkit-box-shadow: 0 0 7px 0 rgba(51,51,51,0.33);
+  box-shadow: 0 0 7px 0 rgba(51,51,51,0.33);
+  width:100%;
+}
+
+a.btn_more.more:hover svg {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+a.btn_more svg {
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+a.btn_more.configure:hover svg {
+  transform-origin: center;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+ul.cars_list li:hover .hide_block {
+  bottom: -90px;
+  opacity: 1;
+}
+ul.cars_list li:hover {
+  transform: scale(1.1);
+  z-index: 2 !important;
+}
+ul.cars_list li {
+  position: relative;
+  z-index: 1;
+  vertical-align: top;
+}
+.brands .logo_brand {
+width: 16%;
+padding: 50px;
+}
+
+h2.brand_title {
+padding: 20px;
+padding-top: 90px;
+}
+.brands .logo_brand {
+transition: 0.4s ease filter, 0.8s ease transform;
+filter: grayscale(100);
+}
+
+.brands .logo_brand:hover {
+filter: grayscale(0);
+transform: scale(1.1);
+}

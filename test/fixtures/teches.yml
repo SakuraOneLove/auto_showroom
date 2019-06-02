@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  num_of_doors: 1
+  num_of_place: 1
+  loc_of_engine: MyString
+  mspeed: MyString
+  racing: MyString
+  way_res: MyString
+  drive: 1
+  transmission: 1
+  typeng: 1
+
+two:
+  num_of_doors: 1
+  num_of_place: 1
+  loc_of_engine: MyString
+  mspeed: MyString
+  racing: MyString
+  way_res: MyString
+  drive: 1
+  transmission: 1
+  typeng: 1

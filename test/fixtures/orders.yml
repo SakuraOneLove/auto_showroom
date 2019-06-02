@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 1
+  type_of_pay: MyString
+  delivery: MyString
+  colour: MyString
+  final_price: 1
+  extended: 1
+  customer: 1
+  product: 1
+
+two:
+  amount: 1
+  type_of_pay: MyString
+  delivery: MyString
+  colour: MyString
+  final_price: 1
+  extended: 1
+  customer: 1
+  product: 1

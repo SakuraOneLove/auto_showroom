@@ -1,0 +1,145 @@
+<body class="bcolor">
+  <div class="framing" align="center">
+    <br><h2>Данные клиента:</h2>
+    <table style="width: 70%;" class="table table-bordered">
+      <tbody>
+      <tr>
+        <td><strong>ФИО:</strong>&nbsp;<%= @c.full_name %></td>
+        <td><strong>Паспортные данные:</strong>&nbsp;<%= @c.passport_data %></td>
+      </tr>
+      <tr>
+        <td><strong>Дом. адрес:</strong>&nbsp;<%= @c.adds %></td>
+        <td><strong>Телефон:</strong>&nbsp;<%= @c.phone_num %></td>
+      </tr>
+      </tbody>
+    </table>
+    <% unless Order.find_by(customer_id: @c_id.to_i).nil? %>
+      <br><br><h3>Заказы клиента: </h3><br>
+      <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Марка</th>
+          <th scope="col">Модель</th>
+          <th scope="col">Количество</th>
+          <th scope="col">Доставка</th>
+          <th scope="col">Стоймость</th>
+          <th scope="col">Вид оплаты</th>
+          <th scope="col">Расширенные опции</th>
+          <th scope="col">Цвет</th>
+          <% if User.find(session[:user_id]).perk.edit %>
+            <th scope="col">&nbsp;</th>
+          <% end %> 
+        </tr>
+      </thead>
+      <tbody>
+        <% curr = 1 %>
+        <% Order.all.each do |el|%>
+          <% if el.customer.id == @c_id.to_i %>
+            <tr class="info">
+              <th scope="row" class="num"><%= curr %></th>
+              <td><%= el.product.brand.name %></td>
+              <td><%= el.product.model %></td>
+              <td><%= el.amount %></td>
+              <td><%= el.delivery %></td>
+              <td><%= el.final_price * el.amount %>₽</td>
+              <td><%= el.type_of_pay %></td>
+              <td>
+                <label><input class="check" type="checkbox" disabled="disabled" <% if el.extended.abs %><%=checked="checked"%><% end %>>abs</label><br>
+                <label><input class="check" type="checkbox" disabled="disabled" <% if el.extended.heating %><%=checked="checked"%><% end %> "disable">подогрев</label><br>
+                <label><input class="check" type="checkbox" disabled="disabled" <% if el.extended.multim %><%=checked="checked"%><% end %> "disable">мультимедиа</label><br>
+                <label><input class="check" type="checkbox" disabled="disabled" <% if el.extended.p_sens %><%=checked="checked"%><% end %> "disable">парктроник</label><br>
+                <label><input class="check" type="checkbox" disabled="disabled" <% if el.extended.nav %><%='checked="checked"'%><% end %> "disable">навигатор</label>
+              </td>
+              <td>
+                <label><input class="radio" type="radio" name="rbtn<%=el.id%>" disabled="disabled" value="зелёный" <% if el.colour == "зелёный" %><%=checked="checked"%><% end %>>зелёный</label><br>
+                <label><input class="radio" type="radio" name="rbtn<%=el.id%>" disabled="disabled" value="жёлтый" <% if el.colour == "жёлтый" %><%=checked="checked"%><% end %>>жёлтый</label><br>
+                <label><input class="radio" type="radio" name="rbtn<%=el.id%>" disabled="disabled" value="серый" <% if el.colour == "серый" %><%=checked="checked"%><% end %>>серый</label><br>
+                <label><input class="radio" type="radio" name="rbtn<%=el.id%>" disabled="disabled" value="чёрный" <% if el.colour == "чёрный" %><%=checked="checked"%><% end %>>чёрный</label><br>
+                <label><input class="radio" type="radio" name="rbtn<%=el.id%>" disabled="disabled" value="белый" <% if el.colour == "белый" %><%=checked="checked"%><% end %>>белый</label>
+              </td>
+              <td>
+                <% if User.find(session[:user_id]).perk.edit %>
+                  <span class="right" o_id="<%= el.id %>">Изменить</span>&nbsp;|&nbsp;
+                 <% end %> 
+                 <% if User.find(session[:user_id]).perk.del %>
+                  <span class="underlined" order_id="<%= el.id %>">Удалить</span>
+                 <% end %> 
+              </td>
+            </tr>
+            <% curr += 1 %>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  
+
+  </div>
+  <script>
+    $(".underlined").click(function () {
+      if (confirm("Вы уверены?")) {
+        $.ajax({
+          type: "POST",
+          url: "/handling/del_order",
+          data: {_method: "DELETE", order_id: $(this).attr('order_id')},
+            headers: {
+              'X-Transaction': 'POST Example',
+              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function () {
+                location.reload();
+              }
+        })
+      };
+    });
+    $(".right").click(function () {
+       let curr_id = $(this).attr('o_id');
+       let tr = $(this).parents('tr')[0].children;
+       let inputs = tr[7].getElementsByClassName('check');
+       for (let i = 0; i < inputs.length; i++){
+         inputs[i].removeAttribute('disabled');
+       }
+       let radios = tr[8].getElementsByClassName('radio');
+       for (let i = 0; i < radios.length; i++){
+         radios[i].removeAttribute('disabled');
+       }
+       radios[0].setAttribute('checked', 'checked');
+       tr[3].innerHTML = '<input type="text" class="form-control" value="' + tr[3].textContent + '">'; 
+       tr[4].innerHTML = '<select class="form-control"><option value="Да">Да</option><option value="Нет">Нет</option></select>';
+       tr[6].innerHTML = '<select class="form-control"><option value="наличные">наличные</option><option value="перечисление">перечисление</option><option value="пластиковая карта">пластиковая карта</option></select>';
+       tr[9].innerHTML = '<button class="btn btn-primary btn-sm">Изменить</button> <button class="btn btn-primary btn-sm">Отменить</button>';
+       tr[9].children[1].onclick = function () { location.reload(); }
+       tr[9].children[0].onclick = function () {
+         let key = true; // проверка полей на заполнение
+         for (let i = 3;i < 5;i++){
+           if (tr[i].children[0].value == '')
+             key = false;
+         }
+         if (key){
+           $.ajax({
+             type: "POST",
+             url: "/handling/edit_order",
+             data: {
+               amount: tr[3].children[0].value, t_pay: tr[6].children[0].value,
+               delivery: tr[4].children[0].value,o_id: curr_id, abs: inputs[0].checked,
+               heating: inputs[1].checked, multim: inputs[2].checked, p_sens: inputs[3].checked,
+               nav: inputs[4].checked, colour: $("input[name=" + "'" + radios[0].name + "'" +  "]:checked").val()
+             },
+             headers: {
+                    'X-Transaction': 'POST Example',
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function () {
+                    alert("Данные успешно изменены!");
+                    location.reload();
+                }
+           });
+         }
+         else
+           alert("Не все поля заполнены!");
+       };
+    })
+  </script>
+</body>
